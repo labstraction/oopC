@@ -1,4 +1,6 @@
-﻿using oopC_;
+﻿using System.Security.Cryptography;
+using System.Text;
+using oopC_;
 
 internal class Program
 {
@@ -35,10 +37,10 @@ internal class Program
         customers.Add(v1);
 
 
-        foreach (var customer in customers)
-        {
-            Console.WriteLine(customer.PrintAddress());
-        }
+        //foreach (var customer in customers)
+        //{
+        //    Console.WriteLine(customer.PrintAddress());
+        //}
 
 
         List<Person> persons = new List<Person>();
@@ -47,6 +49,47 @@ internal class Program
         persons.Add(c3);
         persons.Add(v1);
         persons.Add(e1);
+
+
+
+        var a1 = new BankAccount("123456789", v1, e1);
+
+        a1.Operate(1000);
+        a1.Operate(-500);
+        a1.Operate(2000);
+        a1.Operate(-1000);
+        a1.Operate(-500);
+        a1.Operate(10000);
+        a1.Operate(-2000);
+        a1.Operate(-10000);
+
+        Console.OutputEncoding = Encoding.Unicode;
+
+        Console.WriteLine(a1.generateReport());
+
+        var a2 = new CashBackAccount("987654321", c3, e1);
+
+        a2.Operate(1000);
+        a2.Operate(-500);
+        a2.Operate(2000);
+        a2.Operate(-1000);
+        a2.Operate(-500);
+        a2.Operate(10000);
+        a2.Operate(-2000);
+
+        Console.WriteLine(a2.generateReport());
+
+        var a3 = new SaveAccount("6666666", c2, e1);
+
+        a3.Operate(1000);
+        a3.Operate(-500);
+        a3.Operate(2000);
+        a3.Operate(-1000);
+        a3.Operate(-500);
+        a3.Operate(10000);
+        a3.Operate(-2000);
+
+        Console.WriteLine(a3.generateReport());
 
 
 
