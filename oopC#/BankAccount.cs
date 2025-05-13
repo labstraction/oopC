@@ -27,7 +27,7 @@
             Customer = customer;
             CreationDate = DateTime.Now;
             Employee = employee;
-            Transactions = [];
+            Transactions = new List<Transaction>(); // Fixed initialization  
         }
 
         protected decimal getThreshold()
@@ -42,8 +42,6 @@
 
         public virtual void Operate(decimal amount)
         {
-
-
             if (Balance + amount >= getThreshold())
             {
                 Transaction transaction = new Transaction
@@ -53,20 +51,24 @@
                 };
                 Transactions.Add(transaction);
             }
-
-
-
         }
 
         public string generateReport()
         {
+            var clone = new List<Transaction>(Transactions);
+            //clone.Sort((Transaction t1, Transaction t2) => -t1.Amount.CompareTo(t2.Amount));
+
+            //var clone = Transactions.OrderByDescending(t => t.Amount).ToList();
+
+            clone.Sort();
+
             string report = "Account Number: " + AccountNumber + "\n";
             report += "Customer: " + Customer.ToString() + "\n";
             report += "Creation Date: " + CreationDate.ToString("dd/MM/yyyy") + "\n";
             report += "Employee: " + Employee.ToString() + "\n";
             report += "Balance: " + Balance.ToString("C") + "\n";
             report += "Transactions:\n";
-            foreach (var transaction in Transactions)
+            foreach (var transaction in clone)
             {
                 report += transaction.Date.ToString("dd/MM/yyyy") + ": " + transaction.Amount.ToString("C") + "\n";
             }
